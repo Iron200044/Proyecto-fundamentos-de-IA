@@ -81,32 +81,39 @@ class Aha(Policy):
         # 2. Intentar ganar inmediatamente
         # -----------------------------------------------
         for col in available_cols:
-            simulated = current_state.transition(col)
-            if simulated.get_winner() == current_state.player:
-                return col  # jugada ganadora
+            if current_state.is_applicable(col):
+                simulated = current_state.transition(col)
+                if simulated.get_winner() == current_state.player:
+                    return col # jugada ganadora
 
         # -----------------------------------------------
         # 3. Bloquear al oponente si tiene una victoria inmediata
         # -----------------------------------------------
         for col in available_cols:
-            simulated = current_state.transition(col)
-            opponent_state = ConnectState(simulated.board, -current_state.player)
+            if current_state.is_applicable(col):
+                simulated = current_state.transition(col)
+                opponent_state = ConnectState(simulated.board, -current_state.player)
 
-            # Revisar si el oponente puede ganar en su próximo turno
-            opp_available = [c for c in range(7) if simulated.board[0, c] == 0]
-            for opp_col in opp_available:
-                if opponent_state.transition(opp_col).get_winner() == -current_state.player:
-                    return col  # bloquear
+                # Revisar si el oponente puede ganar en su próximo turno
+                opp_available = [c for c in range(7) if simulated.board[0, c] == 0]
+                for opp_col in opp_available:
+                    if opponent_state.is_applicable(opp_col):
+                        if opponent_state.transition(opp_col).get_winner() == -current_state.player:
+                            return col  # bloquear
 
         # -----------------------------------------------
         # 4. Priorizar columnas fuertes (centralidad)
         # -----------------------------------------------
         preferred_order = [3, 2, 4, 1, 5, 0, 6]
         for col in preferred_order:
-            if col in available_cols:
+            if col in available_cols and current_state.is_applicable(col):
                 return col
 
         # -----------------------------------------------
         # 5. Última alternativa (nunca debería ocurrir)
         # -----------------------------------------------
+        for col in available_cols:
+            if current_state.is_applicable(col):
+                return col
+        
         return available_cols[0]
