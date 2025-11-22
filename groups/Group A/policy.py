@@ -115,5 +115,4 @@ class Aha(Policy):
         for col in available_cols:
             if current_state.is_applicable(col):
                 return col
-        
         return available_cols[0]
