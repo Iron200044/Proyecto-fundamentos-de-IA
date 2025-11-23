@@ -2,6 +2,7 @@ import numpy as np
 import pickle
 import os
 from connect4.policy import Policy
+from connect4.connect_state import ConnectState
 
 
 class QLearningPolicy(Policy):
@@ -23,24 +24,52 @@ class QLearningPolicy(Policy):
     #   MÉTODOS OBLIGATORIOS
     # -------------------------
 
-def mount(self, time_out: int = None) -> None:
-    """
-    Carga la Q-table entrenada desde disco.
-    Aceptamos time_out para ser compatibles con Gradescope.
-    """
-    path = "q_table.pkl"
-    if os.path.exists(path):
-        with open(path, "rb") as f:
-            self.q_table = pickle.load(f)
-    else:
-        self.q_table = {}
+    def mount(self, time_out: int = None) -> None:
+        """
+        Carga la Q-table entrenada desde disco.
+        Aceptamos time_out para ser compatibles con Gradescope.
+        """
+        path = "q_table.pkl"
+        if os.path.exists(path):
+            with open(path, "rb") as f:
+                self.q_table = pickle.load(f)
+        else:
+            self.q_table = {}
 
     def act(self, s: np.ndarray) -> int:
-        """
-        Escoge una acción (columna) para el tablero s durante el torneo.
-        Usa política greedy (epsilon_eval=0).
-        """
+        # Acciones disponibles
+        available = [c for c in range(7) if s[0, c] == 0]
+    
+        # QUIÉN JUEGA AHORA
+        player = self._infer_player_to_move(s)
+
+        # 1. Si YO puedo ganar → gano
+        for c in available:
+            if self._can_win_immediate(s, c, player):
+                return c
+
+        # 2. Si el random puede ganar en el siguiente → bloqueo
+        opp = -player
+        for c in available:
+            if self._can_win_immediate(s, c, opp):
+                return c
+
+        # 3. Si no hay urgencia → usar Q-learning greedy
         return self._select_action_from_q(s, epsilon=self.epsilon_eval)
+
+    def _can_win_immediate(self, board, col, player):
+        # Encuentra la fila disponible en esa columna
+        rows = np.where(board[:, col] == 0)[0]
+        if len(rows) == 0:
+            return False
+
+        r = rows[-1]
+        temp = board.copy()
+        temp[r, col] = player
+
+        # Revisar si esa jugada gana
+        winner = ConnectState(board=temp, player=player).get_winner()
+        return winner == player
 
     # -------------------------
     #   UTILIDADES INTERNAS
@@ -134,7 +163,7 @@ def mount(self, time_out: int = None) -> None:
         return action, state_key
 
     def update_q(self, state_key, action, reward,
-                 next_board, next_player, alpha, gamma, done):
+                next_board, next_player, alpha, gamma, done):
         """
         Regla de actualización estándar de Q-learning.
         """
@@ -162,3 +191,6 @@ def mount(self, time_out: int = None) -> None:
     def save_q_table(self, path="q_table.pkl"):
         with open(path, "wb") as f:
             pickle.dump(self.q_table, f)
+            
+            
+
