@@ -4,11 +4,9 @@
 Este repositorio contiene el desarrollo completo de cuatro agentes distintos para jugar Connect-4 utilizando enfoques de Inteligencia Artificial basados en heurísticas, aprendizaje por refuerzo y búsqueda Monte Carlo Tree Search (MCTS).  
 El objetivo del proyecto fue diseñar, entrenar, evaluar y comparar varios agentes para seleccionar el más competitivo de cara al torneo final del curso.
 
-Link del colab del Entrega.ipynb:
-https://colab.research.google.com/drive/1mGhDRyZCN_Flpg3EvDUieauS3xD2Z9eg?usp=sharing#scrollTo=s4MlwKrXA1TP 
+Link del colab del Entrega.ipynb: https://colab.research.google.com/drive/1mGhDRyZCN_Flpg3EvDUieauS3xD2Z9eg?usp=sharing#scrollTo=s4MlwKrXA1TP 
 
-Link de la presentación:
-https://www.canva.com/design/DAG5kaGGuj4/K8bqVUcn8IOsaFjsmTaalA/edit?utm_content=DAG5kaGGuj4&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton 
+Link de la presentación: https://www.canva.com/design/DAG5kaGGuj4/K8bqVUcn8IOsaFjsmTaalA/edit?utm_content=DAG5kaGGuj4&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton 
 ---
 
 # Agente A – Aha (Heuristic Connect-4 Agent)
