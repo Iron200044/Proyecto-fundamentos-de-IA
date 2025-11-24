@@ -60,15 +60,64 @@ Los agentes C y D implementan búsqueda por simulación basada en MCTS.
 ### Agente C
 Primera versión funcional del MCTS, utilizada como base para pruebas de eficiencia.
 
-### Agente D (final)
-Incluye:
-- Optimización de tiempo por jugada.
-- Playouts rápidos.
-- Selección UCB1 eficiente.
-- Reducción del árbol de búsqueda.
-- Control de tiempo compatible con Gradescope.
+## Policy D – Dos Versiones del Agente MCTS
 
-Este agente superó ampliamente a los demás y fue seleccionado como agente final del torneo.
+El Grupo D desarrolló dos variantes de su agente basado en Monte Carlo Tree Search (MCTS). Cada una responde a un enfoque diferente en cuanto a heurísticas, velocidad y profundidad de búsqueda.
+
+### Versión 1: `AgentD` (MCTS Optimizado con Rollout Mejorado)
+
+`AgentD` combina MCTS clásico con rollouts heurísticos y la opción de usar una función de valor aprendida.
+
+**Características principales:**
+- MCTS con selección UCB1  
+- Heurísticas inmediatas de ganar/bloquear  
+- Rollouts mejorados (`smart_playout`) que integran:
+  - value_fn (si existe)  
+  - chequeos de victoria inmediata  
+  - playout aleatorio corto como respaldo  
+- Hashing del tablero para acelerar evaluaciones  
+- Diseño híbrido: búsqueda + señales heurísticas
+
+**Objetivo:** integrar información aprendida sin sacrificar demasiado rendimiento, útil para experimentación y pruebas comparativas.
+
+---
+
+### Versión 2: `AgentD2` (MCTS Puro y Ultra-Optimizado)
+
+`AgentD2` elimina cualquier heurística dentro del rollout y prioriza maximizar la cantidad de simulaciones por segundo, funcionando de manera más estable en condiciones con límites estrictos de tiempo.
+
+**Características principales:**
+- MCTS puro con UCB1  
+- Heurísticas solo pre-MCTS (ganar/bloquear)  
+- Rollouts completamente uniformes  
+- Reutilización de buffers NumPy para evitar copias  
+- Expansión ligera (un hijo por simulación)  
+- Control estricto del tiempo por movimiento  
+- Alta estabilidad bajo presión de tiempo
+
+**Objetivo:** obtener el mejor rendimiento posible para entornos como Gradescope, donde el tiempo por jugada es limitado.
+
+---
+
+### Comparación rápida
+
+| Aspecto | AgentD | AgentD2 |
+|--------|--------|----------|
+| Tipo | MCTS + heurísticas en rollout | MCTS puro |
+| value_fn | Sí | No |
+| Heurísticas en rollout | Sí | No |
+| Velocidad | Media | Muy alta |
+| Robustez | Buena | Excelente |
+| Uso recomendado | Experimentación | Competencia / Gradescope |
+
+---
+
+### Por qué existen dos versiones
+
+Durante el desarrollo se probaron estrategias híbridas y puras para maximizar el desempeño del agente.  
+`AgentD` permitió experimentar con rollouts informados y valoraciones aprendidas, mientras que `AgentD2` se consolidó como la versión final gracias a su eficiencia y estabilidad bajo restricciones de tiempo.
+
+
 
 ---
 
