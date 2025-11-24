@@ -4,6 +4,8 @@
 Este repositorio contiene el desarrollo completo de cuatro agentes distintos para jugar Connect-4 utilizando enfoques de Inteligencia Artificial basados en heurísticas, aprendizaje por refuerzo y búsqueda Monte Carlo Tree Search (MCTS).  
 El objetivo del proyecto fue diseñar, entrenar, evaluar y comparar varios agentes para seleccionar el más competitivo de cara al torneo final del curso.
 
+https://colab.research.google.com/drive/1mGhDRyZCN_Flpg3EvDUieauS3xD2Z9eg?usp=sharing#scrollTo=s4MlwKrXA1TP 
+
 ---
 
 # Agente A – Aha (Heuristic Connect-4 Agent)
@@ -79,6 +81,7 @@ El Grupo D desarrolló dos variantes de su agente basado en Monte Carlo Tree Sea
 - Diseño híbrido: búsqueda + señales heurísticas
 
 **Objetivo:** integrar información aprendida sin sacrificar demasiado rendimiento, útil para experimentación y pruebas comparativas.
+**Observaciones:** Al realizar este agente descubrimos que por varias razones no era para nada optimo y que por implementaciones en el rollout se generaba ruido que empeoraba el desempeño del agente.
 
 ---
 
@@ -95,7 +98,7 @@ El Grupo D desarrolló dos variantes de su agente basado en Monte Carlo Tree Sea
 - Control estricto del tiempo por movimiento  
 - Alta estabilidad bajo presión de tiempo
 
-**Objetivo:** obtener el mejor rendimiento posible para entornos como Gradescope, donde el tiempo por jugada es limitado.
+**Objetivo:** Mejorar el agente D, al igual que hacer una mejor version del C, al corregir errores de la primera version. 
 
 ---
 
@@ -115,7 +118,7 @@ El Grupo D desarrolló dos variantes de su agente basado en Monte Carlo Tree Sea
 ### Por qué existen dos versiones
 
 Durante el desarrollo se probaron estrategias híbridas y puras para maximizar el desempeño del agente.  
-`AgentD` permitió experimentar con rollouts informados y valoraciones aprendidas, mientras que `AgentD2` se consolidó como la versión final gracias a su eficiencia y estabilidad bajo restricciones de tiempo.
+`AgentD` Demostro tener un peor desempeño a comparación de el resto de los agentes, por ende decidimos corregirlo y mejorar el mismo para poder obtener una mejor version corrigiendo los errores que tenia el D, y a su vez demostrar que esta nueva version es  capaz de ganarle a todos los agentes que desarrollamos.
 
 
 
