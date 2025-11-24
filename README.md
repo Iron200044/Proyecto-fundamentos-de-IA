@@ -7,6 +7,9 @@ El objetivo del proyecto fue diseñar, entrenar, evaluar y comparar varios agent
 Link del colab del Entrega.ipynb: https://colab.research.google.com/drive/1mGhDRyZCN_Flpg3EvDUieauS3xD2Z9eg?usp=sharing#scrollTo=s4MlwKrXA1TP 
 
 Link de la presentación: https://www.canva.com/design/DAG5kaGGuj4/K8bqVUcn8IOsaFjsmTaalA/edit?utm_content=DAG5kaGGuj4&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton 
+
+La politica para el torneo es la que se llama "policyganadora.py"
+No necesita archivos extra y corre como las policy de ejemplo en el torneo.
 ---
 
 # Agente A – Aha (Heuristic Connect-4 Agent)
