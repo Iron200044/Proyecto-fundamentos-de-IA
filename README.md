@@ -24,7 +24,7 @@ El Agente A implementa una política heurística diseñada para ganar de manera 
 
 ---
 
-# Agente B – Q-Learning (Tabular RL Agent)
+# Agente B – Q-Learning
 
 El Agente B implementa aprendizaje por refuerzo mediante Q-Learning tabular. Aprende jugando miles de partidas simuladas contra distintos rivales.
 
